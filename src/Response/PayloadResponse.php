@@ -11,7 +11,7 @@ use stdClass;
  *
  * @package SSitdikov\ATOL\Response
  */
-class PayloadResponse implements ResponseInterface
+class PayloadResponse implements ResponseInterface, \JsonSerializable
 {
     private $total;
 
@@ -31,6 +31,8 @@ class PayloadResponse implements ResponseInterface
 
     private $ecrRegistrationNumber;
 
+    private $ofdReceiptUrl;
+
 
     /**
      * PayloadResponse constructor.
@@ -39,15 +41,16 @@ class PayloadResponse implements ResponseInterface
      */
     public function __construct(stdClass $json)
     {
-        $this->total = $json->total;
-        $this->fnsSite = $json->fns_site;
-        $this->fnNumber = $json->fn_number;
-        $this->shiftNumber = $json->shift_number;
-        $this->receiptDatetime = $json->receipt_datetime;
-        $this->fiscalReceiptNumber = $json->fiscal_receipt_number;
-        $this->fiscalDocumentNumber = $json->fiscal_document_number;
+        $this->total                   = $json->total;
+        $this->fnsSite                 = $json->fns_site;
+        $this->fnNumber                = $json->fn_number;
+        $this->shiftNumber             = $json->shift_number;
+        $this->receiptDatetime         = $json->receipt_datetime;
+        $this->fiscalReceiptNumber     = $json->fiscal_receipt_number;
+        $this->fiscalDocumentNumber    = $json->fiscal_document_number;
         $this->fiscalDocumentAttribute = $json->fiscal_document_attribute;
-        $this->ecrRegistrationNumber = $json->ecr_registration_number;
+        $this->ecrRegistrationNumber   = $json->ecr_registration_number;
+        $this->ofdReceiptUrl           = $json->ofd_receipt_url;
     }
 
 
@@ -130,4 +133,29 @@ class PayloadResponse implements ResponseInterface
     {
         return $this->ecrRegistrationNumber;
     }
+    
+    /**
+     * @return mixed
+     */
+    public function getOfdReceiptUrl()
+    {
+        return $this->ofdReceiptUrl;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+           'total'                     => $this->getTotal(),
+           'fns_site'                  => $this->getFnsSite(),
+           'fn_number'                 => $this->getFnNumber(),
+           'shift_number'              => $this->getShiftNumber(),
+           'receipt_datetime'          => $this->getReceiptDatetime(),
+           'fiscal_receipt_number'     => $this->getFiscalReceiptNumber(),
+           'fiscal_document_number'    => $this->fiscalDocumentNumber(),
+           'fiscal_document_attribute' => $this->fiscalDocumentAttribute(),
+           'ecr_registration_number'   => $this->ecrRegistrationNumber(),
+           'ofd_receipt_url'           => $this->ofdReceiptUrl()
+        ];
+    }
+    
 }
