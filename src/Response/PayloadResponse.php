@@ -151,10 +151,10 @@ class PayloadResponse implements ResponseInterface, \JsonSerializable
            'shift_number'              => $this->getShiftNumber(),
            'receipt_datetime'          => $this->getReceiptDatetime(),
            'fiscal_receipt_number'     => $this->getFiscalReceiptNumber(),
-           'fiscal_document_number'    => $this->fiscalDocumentNumber(),
-           'fiscal_document_attribute' => $this->fiscalDocumentAttribute(),
-           'ecr_registration_number'   => $this->ecrRegistrationNumber(),
-           'ofd_receipt_url'           => $this->ofdReceiptUrl()
+           'fiscal_document_number'    => $this->getFiscalDocumentNumber(),
+           'fiscal_document_attribute' => $this->getFiscalDocumentAttribute(),
+           'ecr_registration_number'   => $this->getEcrRegistrationNumber(),
+           'ofd_receipt_url'           => $this->getOfdReceiptUrl()
         ];
     }
     
